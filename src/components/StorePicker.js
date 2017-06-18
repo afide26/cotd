@@ -11,7 +11,9 @@ class StorePicker extends React.Component {
   selectStore(event){
     event.preventDefault();
 
-    console.log(this.storeInput.value.toUpperCase());
+    const storeId = this.storeInput.value;
+    console.log("Going to ", storeId);
+    this.context.router.transitionTo(`/store/${storeId}`);
   }
   render(){
     return(
@@ -24,4 +26,7 @@ class StorePicker extends React.Component {
   }
 }
 
+StorePicker.contextTypes = {
+  router: React.PropTypes.object
+}
 export default StorePicker;
