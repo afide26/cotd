@@ -2,16 +2,58 @@ import React from 'react';
 import Header from './Header.js';
 import Order from './Order.js';
 import Inventory from './Inventory.js'
+import sampleFishes from '../sample-fishes';
+import Fish from './Fish';
+
+
 
 class App extends React.Component{
+  constructor(){
+    super();
+    this.handleAddFish=this.handleAddFish.bind(this);
+    this.handleLoadSamples=this.handleLoadSamples.bind(this);
+    this.handleAddToOrder=this.handleAddToOrder.bind(this);
+    this.state={
+      fishes:{},
+      order:{}
+    }
+  }
+
+  handleAddFish(fish){
+    const fishes = {...this.state.fishes};
+
+    const timestamp = Date.now();
+    fishes[`fish-${timestamp}`] = fish;
+    this.setState({fishes});
+  }
+
+  handleLoadSamples(){
+    this.setState({
+      fishes: sampleFishes
+    })
+  }
+
+  handleAddToOrder(key){
+    const order = {...this.state.order};
+    // update or add the number of fish ordered
+    order[key] = order[key] + 1 || 1;
+    this.setState({order})
+  }
+
   render(){
     return(
       <div className="catch-of-the-day">
         <div className="menu">
           <Header tagline="Fresh Seafood Market"/>
+          <ul className="list-of-fishes">
+            {Object
+              .keys(this.state.fishes)
+              .map( (key) => <Fish key={key} index={key} onAddToOrder={this.handleAddToOrder} details={this.state.fishes[key]}/>)
+            }
+          </ul>
         </div>
-        <Order/>
-        <Inventory/>
+        <Order fishes={this.state.fishes} order={this.state.order}/>
+        <Inventory onAddFish={this.handleAddFish} onLoadSamples={this.handleLoadSamples}/>
       </div>
     )
   }
