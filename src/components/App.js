@@ -15,6 +15,7 @@ class App extends React.Component{
     this.handleAddFish=this.handleAddFish.bind(this);
     this.handleLoadSamples=this.handleLoadSamples.bind(this);
     this.handleAddToOrder=this.handleAddToOrder.bind(this);
+    this.handleUpdateFish = this.handleUpdateFish.bind(this);
     this.state={
       fishes:{},
       order:{}
@@ -66,6 +67,12 @@ componentWillUpdate(nextProps,nextState){
     this.setState({order})
   }
 
+  handleUpdateFish(key, updatedFish){
+    const fishes = {...this.state.fishes}
+    fishes[key] = updatedFish;
+    this.setState({fishes});
+  }
+
   render(){
     return(
       <div className="catch-of-the-day">
@@ -83,7 +90,11 @@ componentWillUpdate(nextProps,nextState){
               fishes={this.state.fishes}
               order={this.state.order}
         />
-        <Inventory onAddFish={this.handleAddFish} onLoadSamples={this.handleLoadSamples}/>
+        <Inventory
+          onAddFish={this.handleAddFish}
+          onLoadSamples={this.handleLoadSamples}
+          fishes={this.state.fishes}
+          onFishUpdate={this.handleUpdateFish}/>
       </div>
     )
   }

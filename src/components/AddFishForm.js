@@ -11,7 +11,7 @@ class AddFishForm extends React.Component{
       name: this.name.value,
       price: this.price.value,
       status: this.status.value,
-      description: this.desc.value,
+      desc: this.desc.value,
       image: this.image.value
     }
 
