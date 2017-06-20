@@ -12,10 +12,12 @@ import Fish from './Fish';
 class App extends React.Component{
   constructor(){
     super();
-    this.handleAddFish=this.handleAddFish.bind(this);
-    this.handleLoadSamples=this.handleLoadSamples.bind(this);
-    this.handleAddToOrder=this.handleAddToOrder.bind(this);
+    this.handleAddFish = this.handleAddFish.bind(this);
+    this.handleOnRemoveFish = this.handleOnRemoveFish.bind(this);
+    this.handleLoadSamples = this.handleLoadSamples.bind(this);
+    this.handleAddToOrder = this.handleAddToOrder.bind(this);
     this.handleUpdateFish = this.handleUpdateFish.bind(this);
+    this.handleOnRemoveOrder = this.handleOnRemoveOrder.bind(this);
     this.state={
       fishes:{},
       order:{}
@@ -73,6 +75,17 @@ componentWillUpdate(nextProps,nextState){
     this.setState({fishes});
   }
 
+  handleOnRemoveFish(key){
+    const fishes = {...this.state.fishes}
+    fishes[key]=null;
+    this.setState({fishes});
+  }
+
+  handleOnRemoveOrder(key){
+    const order = {...this.state.order};
+    delete order[key];
+    this.setState({order});
+  }
   render(){
     return(
       <div className="catch-of-the-day">
@@ -89,12 +102,14 @@ componentWillUpdate(nextProps,nextState){
               params = {this.props.params}
               fishes={this.state.fishes}
               order={this.state.order}
+              onRemoveOrder={this.handleOnRemoveOrder}
         />
         <Inventory
           onAddFish={this.handleAddFish}
           onLoadSamples={this.handleLoadSamples}
           fishes={this.state.fishes}
-          onFishUpdate={this.handleUpdateFish}/>
+          onFishUpdate={this.handleUpdateFish}
+          onRemoveFish={this.handleOnRemoveFish}/>
       </div>
     )
   }
