@@ -1,4 +1,6 @@
 import React from 'react';
+import base from '../base';
+
 import Header from './Header.js';
 import Order from './Order.js';
 import Inventory from './Inventory.js'
@@ -18,6 +20,30 @@ class App extends React.Component{
       order:{}
     }
   }
+
+componentWillMount(){
+  this.ref = base.syncState(`${this.props.params.storeId}`, {
+    context: this,
+    state:'fishes'
+  });
+
+  const localStorageRef = localStorage.getItem(`order-${this.props.params.orderId}`);
+
+  if(localStorageRef){
+    this.setState({
+      order: JSON.parse(localStorageRef)
+    })
+  }
+}
+
+componentWillUnmount(){
+  base.removeBinding(this.ref)
+}
+
+componentWillUpdate(nextProps,nextState){
+  localStorage.setItem(`order-${this.props.params.orderId}`,
+    JSON.stringify(nextState.order))
+}
 
   handleAddFish(fish){
     const fishes = {...this.state.fishes};
@@ -52,7 +78,11 @@ class App extends React.Component{
             }
           </ul>
         </div>
-        <Order fishes={this.state.fishes} order={this.state.order}/>
+        <Order
+              params = {this.props.params}
+              fishes={this.state.fishes}
+              order={this.state.order}
+        />
         <Inventory onAddFish={this.handleAddFish} onLoadSamples={this.handleLoadSamples}/>
       </div>
     )
