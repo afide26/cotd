@@ -48,44 +48,45 @@ componentWillUpdate(nextProps,nextState){
     JSON.stringify(nextState.order))
 }
 
-  handleAddFish(fish){
-    const fishes = {...this.state.fishes};
+handleAddFish(fish){
+  const fishes = {...this.state.fishes};
 
-    const timestamp = Date.now();
-    fishes[`fish-${timestamp}`] = fish;
-    this.setState({fishes});
-  }
+  const timestamp = Date.now();
+  fishes[`fish-${timestamp}`] = fish;
+  this.setState({fishes});
+}
 
-  handleLoadSamples(){
-    this.setState({
-      fishes: sampleFishes
-    })
-  }
+handleLoadSamples(){
+  this.setState({
+    fishes: sampleFishes
+  })
+}
 
-  handleAddToOrder(key){
-    const order = {...this.state.order};
-    // update or add the number of fish ordered
-    order[key] = order[key] + 1 || 1;
-    this.setState({order})
-  }
+handleAddToOrder(key){
+  const order = {...this.state.order};
+  // update or add the number of fish ordered
+  order[key] = order[key] + 1 || 1;
+  this.setState({order})
+}
 
-  handleUpdateFish(key, updatedFish){
-    const fishes = {...this.state.fishes}
-    fishes[key] = updatedFish;
-    this.setState({fishes});
-  }
+handleUpdateFish(key, updatedFish){
+  const fishes = {...this.state.fishes}
+  fishes[key] = updatedFish;
+  this.setState({fishes});
+}
 
-  handleOnRemoveFish(key){
-    const fishes = {...this.state.fishes}
-    fishes[key]=null;
-    this.setState({fishes});
-  }
+handleOnRemoveFish(key){
+  const fishes = {...this.state.fishes}
+  fishes[key]=null;
+  this.setState({fishes});
+}
 
-  handleOnRemoveOrder(key){
-    const order = {...this.state.order};
-    delete order[key];
-    this.setState({order});
-  }
+handleOnRemoveOrder(key){
+  const order = {...this.state.order};
+  delete order[key];
+  this.setState({order});
+}
+
   render(){
     return(
       <div className="catch-of-the-day">
