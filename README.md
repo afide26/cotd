@@ -7,3 +7,4 @@ This application was built using the following technologies:
 4. React Router 4 for Routing
 5. React Animation
 6. Adding custom methods to component lifecycle methods
+7. Use OAuth for Facebook, React and Github

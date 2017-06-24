@@ -18,6 +18,7 @@ class App extends React.Component{
     this.handleAddToOrder=this.handleAddToOrder.bind(this);
     this.handleUpdateFish=this.handleUpdateFish.bind(this);
     this.handleOnRemoveOrder=this.handleOnRemoveOrder.bind(this);
+
     this.state={
       fishes:{},
       order:{}
@@ -87,17 +88,18 @@ handleOnRemoveOrder(key){
   this.setState({order});
 }
 
+
   render(){
     return(
       <div className="catch-of-the-day">
         <div className="menu">
           <Header tagline="Fresh Seafood Market"/>
-          <ul className="list-of-fishes">
-            {Object
-              .keys(this.state.fishes)
-              .map( (key) => <Fish key={key} index={key} onAddToOrder={this.handleAddToOrder} details={this.state.fishes[key]}/>)
-            }
-          </ul>
+            <ul className="list-of-fishes">
+              {Object
+                .keys(this.state.fishes)
+                .map( (key) => <Fish key={key} index={key} onAddToOrder={this.handleAddToOrder} details={this.state.fishes[key]}/>)
+              }
+            </ul>
         </div>
         <Order
               params={this.props.params}
@@ -110,7 +112,8 @@ handleOnRemoveOrder(key){
           onLoadSamples={this.handleLoadSamples}
           fishes={this.state.fishes}
           onFishUpdate={this.handleUpdateFish}
-          onRemoveFish={this.handleOnRemoveFish}/>
+          onRemoveFish={this.handleOnRemoveFish}
+          storeId={this.props.params.storeId}/>
       </div>
     )
   }
