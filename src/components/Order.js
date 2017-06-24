@@ -1,16 +1,16 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { formatPrice } from '../helpers.js';
 import CSSTransitionGroup from 'react-addons-css-transition-group';
 
 class Order extends React.Component{
   constructor(){
     super();
-    this.renderOrder = this.renderOrder.bind(this);
+    this.renderOrder=this.renderOrder.bind(this);
   }
   renderOrder(key){
-    const fish = this.props.fishes[key];
-    const count = this.props.order[key];
-    const removeButton = <button onClick={()=> this.props.onRemoveOrder(key)}>&#42;</button>
+    const fish=this.props.fishes[key];
+    const count=this.props.order[key];
+    const removeButton=<button onClick={()=> this.props.onRemoveOrder(key)}>&#42;</button>
 
     if(!fish || fish.status==='unavailable'){
       return <li key={key}> Sorry, {fish ? fish.name : 'fish'} is no longer available {removeButton}</li>
@@ -25,8 +25,8 @@ class Order extends React.Component{
             transitionName="count"
             className="count"
             component="span"
-            transitionEnterTimeout = {250}
-            transitionLeaveTimeout = {250}
+            transitionEnterTimeout={250}
+          transitionLeaveTimeout={250}
             >
             <span key={count}>{count}</span>
           </CSSTransitionGroup>
@@ -39,11 +39,11 @@ class Order extends React.Component{
   }
 
   render(){
-    const orderIds = Object.keys(this.props.order);
-    const total = orderIds.reduce((prevTotal, key)=>{
-      const fish = this.props.fishes[key];
-      const count = this.props.order[key];
-      const isAvailable = fish && fish.status === 'available';
+    const orderIds=Object.keys(this.props.order);
+    const total=orderIds.reduce((prevTotal, key)=>{
+      const fish=this.props.fishes[key];
+      const count=this.props.order[key];
+      const isAvailable=fish && fish.status === 'available';
 
       if(isAvailable){
         return prevTotal + (count * fish.price || 0);
@@ -55,8 +55,8 @@ class Order extends React.Component{
           <CSSTransitionGroup
             component="ul"
             transitionName="order"
-            transitionEnterTimeout = {500}
-            transitionLeaveTimeout = {500}
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={500}
             className="order">
             {orderIds.map((this.renderOrder))}
             <li className="total">
@@ -69,4 +69,9 @@ class Order extends React.Component{
   }
 }
 
+Order.propTypes = {
+  fishes: PropTypes.object.isRequired,
+  order: PropTypes.object.isRequired,
+  onRemoveOrder: PropTypes.func.isRequired,
+}
 export default Order;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import base from '../base';
 
 import Header from './Header.js';
@@ -12,12 +12,12 @@ import Fish from './Fish';
 class App extends React.Component{
   constructor(){
     super();
-    this.handleAddFish = this.handleAddFish.bind(this);
-    this.handleOnRemoveFish = this.handleOnRemoveFish.bind(this);
-    this.handleLoadSamples = this.handleLoadSamples.bind(this);
-    this.handleAddToOrder = this.handleAddToOrder.bind(this);
-    this.handleUpdateFish = this.handleUpdateFish.bind(this);
-    this.handleOnRemoveOrder = this.handleOnRemoveOrder.bind(this);
+    this.handleAddFish=this.handleAddFish.bind(this);
+    this.handleOnRemoveFish=this.handleOnRemoveFish.bind(this);
+    this.handleLoadSamples=this.handleLoadSamples.bind(this);
+    this.handleAddToOrder=this.handleAddToOrder.bind(this);
+    this.handleUpdateFish=this.handleUpdateFish.bind(this);
+    this.handleOnRemoveOrder=this.handleOnRemoveOrder.bind(this);
     this.state={
       fishes:{},
       order:{}
@@ -25,12 +25,12 @@ class App extends React.Component{
   }
 
 componentWillMount(){
-  this.ref = base.syncState(`${this.props.params.storeId}`, {
+  this.ref=base.syncState(`${this.props.params.storeId}`, {
     context: this,
     state:'fishes'
   });
 
-  const localStorageRef = localStorage.getItem(`order-${this.props.params.orderId}`);
+  const localStorageRef=localStorage.getItem(`order-${this.props.params.orderId}`);
 
   if(localStorageRef){
     this.setState({
@@ -49,10 +49,10 @@ componentWillUpdate(nextProps,nextState){
 }
 
 handleAddFish(fish){
-  const fishes = {...this.state.fishes};
+  const fishes={...this.state.fishes};
 
-  const timestamp = Date.now();
-  fishes[`fish-${timestamp}`] = fish;
+  const timestamp=Date.now();
+  fishes[`fish-${timestamp}`]=fish;
   this.setState({fishes});
 }
 
@@ -63,26 +63,26 @@ handleLoadSamples(){
 }
 
 handleAddToOrder(key){
-  const order = {...this.state.order};
+  const order={...this.state.order};
   // update or add the number of fish ordered
-  order[key] = order[key] + 1 || 1;
+  order[key]=order[key] + 1 || 1;
   this.setState({order})
 }
 
 handleUpdateFish(key, updatedFish){
-  const fishes = {...this.state.fishes}
-  fishes[key] = updatedFish;
+  const fishes={...this.state.fishes}
+  fishes[key]=updatedFish;
   this.setState({fishes});
 }
 
 handleOnRemoveFish(key){
-  const fishes = {...this.state.fishes}
+  const fishes={...this.state.fishes}
   fishes[key]=null;
   this.setState({fishes});
 }
 
 handleOnRemoveOrder(key){
-  const order = {...this.state.order};
+  const order={...this.state.order};
   delete order[key];
   this.setState({order});
 }
@@ -100,7 +100,7 @@ handleOnRemoveOrder(key){
           </ul>
         </div>
         <Order
-              params = {this.props.params}
+              params={this.props.params}
               fishes={this.state.fishes}
               order={this.state.order}
               onRemoveOrder={this.handleOnRemoveOrder}
@@ -116,4 +116,7 @@ handleOnRemoveOrder(key){
   }
 }
 
+App.propTypes = {
+  params:PropTypes.object.isRequired
+}
 export default App;
